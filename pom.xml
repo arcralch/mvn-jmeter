@@ -42,6 +42,7 @@
           <executions>
 
               <execution>
+                  <?m2e execute onConfiguration?>
                   <id>configuration</id>
                   <goals>
                       <goal>configure</goal>
