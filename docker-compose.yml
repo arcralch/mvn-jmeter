@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  jmeter-runner:
+    image: maven:3.8.7-eclipse-temurin-11
+    container_name: jmeter-maven-runner
+    working_dir: /app
+    volumes:
+      # Monta el directorio actual del repositorio en el contenedor (/app)
+      - .:/app
+      # Volumen para cachear las dependencias de Maven y acelerar ejecuciones futuras
+      - maven-repo:/root/.m2
+    # Comando que se ejecutará al levantar el contenedor (ejecuta pruebas y genera reporte)
+    command: /bin/sh -c "mvn clean verify"
+
+volumes:
+  maven-repo:
+    name: jmeter-maven-repo
