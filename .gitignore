@@ -4,6 +4,9 @@
 # Log file
 *.log
 
+# Allure report
+.allure/
+
 # BlueJ files
 *.ctxt
 
@@ -51,4 +54,4 @@ bin/
 .Spotlight-V100
 .Trashes
 ehthumbs.db
-Thumbs.db
+Thumbs.db
