@@ -50,3 +50,36 @@ Este comando:
 4. Ejecutará automáticamente el ciclo `mvn clean verify`.
 
 Al finalizar, el contenedor se detendrá y podrás consultar los reportes en tu carpeta `target/` local de la misma manera que si lo hubieras ejecutado sin Docker.
+
+## Análisis de Código con SonarCloud
+
+Se ha integrado el análisis de código con **SonarCloud** utilizando el plugin `sonar-maven-plugin`. El análisis se ejecuta automáticamente durante la fase `verify` de Maven.
+
+### Configuración del Token
+
+Para que el análisis se comunique correctamente con SonarCloud, es necesario configurar una variable de entorno con tu token de acceso (`SONAR_TOKEN`):
+
+**En Linux/macOS:**
+```bash
+export SONAR_TOKEN="tu_token_generado_en_sonarcloud"
+```
+
+**En Windows (PowerShell):**
+```powershell
+$env:SONAR_TOKEN="tu_token_generado_en_sonarcloud"
+```
+
+**En Windows (CMD):**
+```cmd
+set SONAR_TOKEN=tu_token_generado_en_sonarcloud
+```
+
+### Ejecución del Análisis
+
+Una vez configurada la variable de entorno, simplemente ejecuta el comando de verificación estándar:
+
+```bash
+mvn clean verify sonar:sonar
+```
+
+Esto realizará la ejecución de las pruebas de JMeter y enviará el reporte de análisis estático a [SonarCloud](https://sonarcloud.io) para el proyecto `mvn-jmeter` en la organización `arcralch`.
