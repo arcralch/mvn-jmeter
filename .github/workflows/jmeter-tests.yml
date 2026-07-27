@@ -40,15 +40,21 @@ jobs:
       - name: Upload JMeter HTML Report
         uses: actions/upload-artifact@v4
         with:
-          name: jmeter-html-report
+          name: jmeter-report
           path: target/jmeter/reports/
           retention-days: 30
           if-no-files-found: error
 
-      - name: Upload JMeter HTML Results
+      - name: Upload JMeter Results (JTL)
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-results
           path: target/jmeter/results/
           retention-days: 30
           if-no-files-found: warn
+
+      - name: Display Report Information
+        run: |
+          echo "=== JMeter Test Results ==="
+          echo "HTML report available at: target/jmeter/reports/CSVSample/index.html"
+          echo "Download the 'jmeter-report' artifact to view the full HTML report."
