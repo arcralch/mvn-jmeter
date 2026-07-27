@@ -10,8 +10,11 @@ services:
       - .:/app
       # Volumen para cachear las dependencias de Maven y acelerar ejecuciones futuras
       - maven-repo:/root/.m2
+      # Monta directorio de reportes para persistirlos localmente
+      - ./target/jmeter/reports:/app/target/jmeter/reports
+      - ./target/jmeter/results:/app/target/jmeter/results
     # Comando que se ejecutará al levantar el contenedor (ejecuta pruebas y genera reporte)
-    command: /bin/sh -c "mvn clean verify"
+    command: /bin/sh -c "mvn clean verify && echo 'Report available at: target/jmeter/reports/index.html'"
 
 volumes:
   maven-repo:

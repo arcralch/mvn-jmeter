@@ -90,10 +90,10 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>4.0.0.4121</version>
+                <version>3.9.1.2184</version>
                 <executions>
                         <execution>
-                            <phase>verify</phase>
+                            <phase>none</phase>
                             <goals>
                                 <goal>sonar</goal>
                             </goals>

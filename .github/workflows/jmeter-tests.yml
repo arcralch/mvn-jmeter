@@ -1,0 +1,60 @@
+name: JMeter Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  run-jmeter-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v5
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run JMeter tests with Maven
+        run: mvn clean verify -Djmeter.verbose=false
+
+      - name: List generated reports
+        run: |
+          echo "=== Files in target/jmeter/reports ==="
+          if [ -d "target/jmeter/reports" ]; then
+            ls -la target/jmeter/reports/
+            echo ""
+            echo "=== HTML files found ==="
+            find target/jmeter/reports -name "*.html" -type f
+          else
+            echo "Reports directory not found"
+          fi
+
+      - name: Upload JMeter HTML Report
+        uses: actions/upload-artifact@v5
+        with:
+          name: jmeter-report
+          path: target/jmeter/reports/
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Upload JMeter Results (JTL)
+        uses: actions/upload-artifact@v5
+        with:
+          name: jmeter-results
+          path: target/jmeter/results/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Display Report Information
+        run: |
+          echo "=== JMeter Test Results ==="
+          echo "HTML report available at: target/jmeter/reports/CSVSample/index.html"
+          echo "Download the 'jmeter-report' artifact to view the full HTML report."
